@@ -11,6 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="GetWeatherAPI.Tests\**" />
+    <Content Remove="GetWeatherAPI.Tests\**" />
+    <EmbeddedResource Remove="GetWeatherAPI.Tests\**" />
+    <None Remove="GetWeatherAPI.Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
