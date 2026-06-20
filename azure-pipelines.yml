@@ -39,14 +39,16 @@ steps:
 
 - powershell: |
     Import-Module WebAdministration
-    Stop-WebSite -Name "WeatherAPI"
-  displayName: 'Stop IIS Site'
+    Stop-WebAppPool -Name "WeatherAPI"
+  displayName: 'Stop App Pool'
 
 - powershell: |
-    dotnet publish "$(Build.SourcesDirectory)\GetWeatherAPI.csproj" -c Release -o "C:\inetpub\wwwroot\WeatherAPI"
+    dotnet publish "$(Build.SourcesDirectory)\GetWeatherAPI.csproj" `
+      -c Release `
+      -o "C:\inetpub\wwwroot\WeatherAPI"
   displayName: 'Publish To IIS'
 
 - powershell: |
     Import-Module WebAdministration
-    Start-WebSite -Name "WeatherAPI"
-  displayName: 'Start IIS Site'
+    Start-WebAppPool -Name "WeatherAPI"
+  displayName: 'Start App Pool'
