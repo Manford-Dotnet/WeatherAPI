@@ -120,77 +120,77 @@ stages:
         artifactName: 'WeatherAPI'
 
 
-# =========================
-# DEPLOY QA
-# =========================
-- stage: Deploy_QA
-  displayName: 'Deploy To QA'
-  dependsOn: Build
+# # =========================
+# # DEPLOY QA
+# # =========================
+# - stage: Deploy_QA
+#   displayName: 'Deploy To QA'
+#   dependsOn: Build
 
-  jobs:
-  - deployment: DeployQA
-    displayName: 'Deploy QA'
-    environment: 'QA'
+#   jobs:
+#   - deployment: DeployQA
+#     displayName: 'Deploy QA'
+#     environment: 'QA'
 
-    strategy:
-      runOnce:
-        deploy:
+#     strategy:
+#       runOnce:
+#         deploy:
 
-          steps:
+#           steps:
 
-          - download: current
-            artifact: WeatherAPI
+#           - download: current
+#             artifact: WeatherAPI
 
-          - powershell: |
-              Import-Module WebAdministration
-              Stop-WebAppPool -Name "WeatherAPI"
-            displayName: 'Stop QA App Pool'
+#           - powershell: |
+#               Import-Module WebAdministration
+#               Stop-WebAppPool -Name "WeatherAPI"
+#             displayName: 'Stop QA App Pool'
 
-          - powershell: |
-              Copy-Item "$(Pipeline.Workspace)\WeatherAPI\*" `
-                "C:\inetpub\wwwroot\WeatherAPI" `
-                -Recurse -Force
-            displayName: 'Copy Files To QA'
+#           - powershell: |
+#               Copy-Item "$(Pipeline.Workspace)\WeatherAPI\*" `
+#                 "C:\inetpub\wwwroot\WeatherAPI" `
+#                 -Recurse -Force
+#             displayName: 'Copy Files To QA'
 
-          - powershell: |
-              Import-Module WebAdministration
-              Start-WebAppPool -Name "WeatherAPI"
-            displayName: 'Start QA App Pool'
+#           - powershell: |
+#               Import-Module WebAdministration
+#               Start-WebAppPool -Name "WeatherAPI"
+#             displayName: 'Start QA App Pool'
 
 
-# =========================
-# DEPLOY PROD
-# =========================
-- stage: Deploy_PROD
-  displayName: 'Deploy To PROD'
-  dependsOn: Deploy_QA
+# # =========================
+# # DEPLOY PROD
+# # =========================
+# - stage: Deploy_PROD
+#   displayName: 'Deploy To PROD'
+#   dependsOn: Deploy_QA
 
-  jobs:
-  - deployment: DeployPROD
-    displayName: 'Deploy PROD'
-    environment: 'PROD'
+#   jobs:
+#   - deployment: DeployPROD
+#     displayName: 'Deploy PROD'
+#     environment: 'PROD'
 
-    strategy:
-      runOnce:
-        deploy:
+#     strategy:
+#       runOnce:
+#         deploy:
 
-          steps:
+#           steps:
 
-          - download: current
-            artifact: WeatherAPI
+#           - download: current
+#             artifact: WeatherAPI
 
-          - powershell: |
-              Import-Module WebAdministration
-              Stop-WebAppPool -Name "Prod.WeatherAPI"
-            displayName: 'Stop PROD App Pool'
+#           - powershell: |
+#               Import-Module WebAdministration
+#               Stop-WebAppPool -Name "Prod.WeatherAPI"
+#             displayName: 'Stop PROD App Pool'
 
-          - powershell: |
-              Copy-Item "$(Pipeline.Workspace)\WeatherAPI\*" `
-                "C:\inetpub\wwwroot\WeatherAPI_PROD" `
-                -Recurse -Force
-            displayName: 'Copy Files To PROD'
+#           - powershell: |
+#               Copy-Item "$(Pipeline.Workspace)\WeatherAPI\*" `
+#                 "C:\inetpub\wwwroot\WeatherAPI_PROD" `
+#                 -Recurse -Force
+#             displayName: 'Copy Files To PROD'
 
-          - powershell: |
-              Import-Module WebAdministration
-              Start-WebAppPool -Name "Prod.WeatherAPI"
-            displayName: 'Start PROD App Pool'
+#           - powershell: |
+#               Import-Module WebAdministration
+#               Start-WebAppPool -Name "Prod.WeatherAPI"
+#             displayName: 'Start PROD App Pool'
