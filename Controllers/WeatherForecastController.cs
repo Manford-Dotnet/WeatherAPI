@@ -30,5 +30,11 @@ namespace GetWeatherAPI.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet("version")]
+        public string GetVersion()
+        {
+            return "Version 1.0";
+        }
     }
 }
