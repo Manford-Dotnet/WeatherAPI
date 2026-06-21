@@ -19,7 +19,7 @@ namespace GetWeatherAPI.Controllers
         }
 
         //06/20/2026
-        [HttpGet(Name = "GetWeatherForecast1")]
+        [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -35,6 +35,12 @@ namespace GetWeatherAPI.Controllers
         public string GetVersion()
         {
             return "Version 1.0";
+        }
+
+        [HttpGet("sayhello")]
+        public string SayHello()
+        {
+            return "Hello!";
         }
     }
 }
