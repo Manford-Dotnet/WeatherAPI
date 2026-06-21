@@ -142,15 +142,21 @@ stages:
             artifact: WeatherAPI
 
           - powershell: |
+               Get-ChildItem "$(Pipeline.Workspace)\WeatherAPI" -Recurse
+            displayName: 'Show Downloaded Files'
+
+          - powershell: |
               Import-Module WebAdministration
               Stop-WebAppPool -Name "WeatherAPI"
             displayName: 'Stop QA App Pool'
 
           - powershell: |
-              Copy-Item "$(Pipeline.Workspace)\WeatherAPI\*" `
-                "C:\inetpub\wwwroot\WeatherAPI" `
-                -Recurse -Force
-            displayName: 'Copy Files To QA'
+              Remove-Item "C:\inetpub\wwwroot\WeatherAPI\*" -Recurse -Force -ErrorAction SilentlyContinue
+              Expand-Archive `
+                -Path "$(Pipeline.Workspace)\WeatherAPI\s.zip" `
+                -DestinationPath "C:\inetpub\wwwroot\WeatherAPI" `
+                -Force
+            displayName: 'Extract Files To QA'
 
           - powershell: |
               Import-Module WebAdministration
@@ -181,7 +187,7 @@ stages:
 
           - powershell: |
                Get-ChildItem "$(Pipeline.Workspace)\WeatherAPI" -Recurse
-               displayName: 'Show Downloaded Files'
+            displayName: 'Show Downloaded Files'
 
           - powershell: |
               Import-Module WebAdministration
