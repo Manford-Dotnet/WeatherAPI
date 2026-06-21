@@ -48,5 +48,11 @@ namespace GetWeatherAPI.Controllers
         {
             return "Hi!";
         }
+
+        [HttpGet("bye")]
+        public string SayBye()
+        {
+            return "Bye!";
+        }
     }
 }
