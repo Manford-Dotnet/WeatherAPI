@@ -180,6 +180,10 @@ stages:
             artifact: WeatherAPI
 
           - powershell: |
+               Get-ChildItem "$(Pipeline.Workspace)\WeatherAPI" -Recurse
+               displayName: 'Show Downloaded Files'
+
+          - powershell: |
               Import-Module WebAdministration
               Stop-WebAppPool -Name "Prod.WeatherAPI"
             displayName: 'Stop PROD App Pool'
